@@ -48,7 +48,7 @@ body {
     min-height: 100%;
     display: grid;
     justify-content: center;
-    margin-top: 48px;
+    align-content: center;
     background-color: var(--bg-color);
     background-image: var(--desktop-bg);
     background-repeat: no-repeat;
