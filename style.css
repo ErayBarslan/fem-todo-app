@@ -5,9 +5,9 @@
 .dark {
     --bg-color: hsl(235, 21%, 11%);
     --bg-content: hsl(235, 24%, 19%);
-    --desktop-bg: url('/images/bg-desktop-dark.jpg');
-    --mobile-bg: url('/images/bg-mobile-dark.jpg');
-    --theme-toggle: url('/images/icon-sun.svg');
+    --desktop-bg: url('images/bg-desktop-dark.jpg');
+    --mobile-bg: url('images/bg-mobile-dark.jpg');
+    --theme-toggle: url('images/icon-sun.svg');
     --todo-text: hsl(233, 11%, 84%);
     --todo-checked: hsla(233, 11%, 84%, 0.3);
     --action-text: rgba(255, 255, 255, 0.51);
@@ -21,9 +21,9 @@
 .light {
     --bg-color: rgb(235, 235, 235);
     --bg-content: white;
-    --desktop-bg: url('/images/bg-desktop-light.jpg');
-    --mobile-bg: url('/images/bg-mobile-light.jpg');
-    --theme-toggle: url('/images/icon-moon.svg');
+    --desktop-bg: url('images/bg-desktop-light.jpg');
+    --mobile-bg: url('images/bg-mobile-light.jpg');
+    --theme-toggle: url('images/icon-moon.svg');
     --todo-text: rgba(71, 71, 71, 0.959);
     --todo-checked: rgba(225, 225, 225, 1.5);
     --action-text: rgba(255, 255, 255, 0.51);
@@ -62,13 +62,13 @@ body {
     width: 26px;
     height: 26px;
     transform: translateY(-5px);
-    background-image: url('/images/icon-sun.svg');
+    background-image: url('images/icon-sun.svg');
     background-repeat: no-repeat;
     cursor: pointer;
 }
 
 .theme-switch:checked {
-    background-image: url('/images/icon-moon.svg');
+    background-image: url('images/icon-moon.svg');
     background-position: center;
 }
 
@@ -164,7 +164,7 @@ body {
 
 .todo-holder .checkbox:checked {
 
-    background: url('./images/icon-check.svg'), linear-gradient(135deg, hsl(192, 100%, 67%) 0%, hsl(280, 87%, 65%) 100%);
+    background: url('images/icon-check.svg'), linear-gradient(135deg, hsl(192, 100%, 67%) 0%, hsl(280, 87%, 65%) 100%);
     background-repeat: no-repeat;
     background-position: center;
     border: none;
@@ -186,7 +186,7 @@ body {
 
 .todo-delete {
     background: transparent;
-    background-image: url('./images/icon-cross.svg');
+    background-image: url('images/icon-cross.svg');
     width: 18px;
     height: 18px;
     margin-right: 9px;
