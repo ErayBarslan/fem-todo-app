@@ -146,7 +146,7 @@ formBtn.addEventListener('click', addTodo)
 const toggleTheme = document.querySelector('.theme-switch')
 const theme = localStorage.getItem('theme')
 
-document.body.classList.toggle(theme == "dark" ? "dark" : "light")
+document.body.classList.toggle(theme == "light" ? "light" : "dark")
 
 if (theme == "light") {
     toggleTheme.checked = true;
