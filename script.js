@@ -5,7 +5,33 @@ const todoContainer = document.querySelector('.todo-container')
 
 
 const load = () => {
-    const todos = JSON.parse(localStorage.getItem("todos"))
+    const todos = JSON.parse(localStorage.getItem("todos")) ||
+        [
+            {
+                text: 'Complete online JavaScript course',
+                isChecked: true,
+            },
+            {
+                text: 'Jog around the park 3x',
+                isChecked: false,
+            },
+            {
+                text: '10 minutes meditation',
+                isChecked: false,
+            },
+            {
+                text: 'Read for 1 hour',
+                isChecked: false,
+            },
+            {
+                text: 'Pick up groceries',
+                isChecked: false,
+            },
+            {
+                text: 'Complete Todo App on Frontend Mentor',
+                isChecked: false,
+            },
+        ]
 
     if (!todos) {
         localStorage.setItem("todos", JSON.stringify([]))
@@ -26,27 +52,27 @@ const addTodo = (e) => {
     const todo = {
         text: todoText,
         isChecked: false,
-        offTop : 0,
+        offTop: 0,
     }
 
     const todos = JSON.parse(localStorage.getItem("todos"))
     const todoTextExists = todos.some(td => td.text === todoText)
 
-    if (todoText.trim() != 0 && !todoTextExists){
-    todos.push(todo)
+    if (todoText.trim() != 0 && !todoTextExists) {
+        todos.push(todo)
 
-    saveTodo(todo)
+        saveTodo(todo)
 
-    const addedTodo = [...document.querySelectorAll('.todo-holder')].slice(-1)[0]
-    todo.offTop = addedTodo.offsetTop  + todos.slice(-2)[0].offTop;
+        const addedTodo = [...document.querySelectorAll('.todo-holder')].slice(-1)[0]
+        todo.offTop = addedTodo.offsetTop + todos.slice(-2)[0].offTop;
 
-    localStorage.setItem("todos", JSON.stringify(todos))
+        localStorage.setItem("todos", JSON.stringify(todos))
 
-    form.reset()
+        form.reset()
 
-    drag()
-    display()
-    items()
+        drag()
+        display()
+        items()
     }
 }
 
@@ -59,7 +85,7 @@ const deleteTodo = (e) => {
 
     let todos = JSON.parse(localStorage.getItem("todos"))
     todos = todos.filter(td => td.text != text)
-    
+
     localStorage.setItem('todos', JSON.stringify(todos))
 
     items()
@@ -69,16 +95,16 @@ const deleteTodo = (e) => {
 const checkTodo = (e) => {
     const todo = e.target.parentElement;
     const text = todo.children[1].textContent;
- 
+
     let todos = JSON.parse(localStorage.getItem("todos"));
-    
+
     todos.forEach(td => {
-       if (td.text === text) td.isChecked = !td.isChecked
+        if (td.text === text) td.isChecked = !td.isChecked
     });
 
     items()
     displayOn()
- 
+
     localStorage.setItem("todos", JSON.stringify(todos));
 }
 
@@ -126,7 +152,7 @@ const clearCompleted = () => {
 
             let todos = JSON.parse(localStorage.getItem("todos"))
             todos = todos.filter(td => td.text != text)
-    
+
             localStorage.setItem('todos', JSON.stringify(todos))
         }
     })
@@ -166,38 +192,38 @@ toggleTheme.addEventListener("change", (e) => {
         document.body.classList.remove("light")
         localStorage.setItem("theme", "dark")
     }
-}) 
+})
 
 
 // DRAG
 
 const drag = () => {
 
-const draggables = document.querySelectorAll('.todo-holder')
+    const draggables = document.querySelectorAll('.todo-holder')
 
-draggables.forEach(dragga => {
-    dragga.addEventListener('dragstart', () => {
-      dragga.classList.add('dragging')
+    draggables.forEach(dragga => {
+        dragga.addEventListener('dragstart', () => {
+            dragga.classList.add('dragging')
+        })
+
+        dragga.addEventListener('dragend', () => {
+            dragga.classList.remove('dragging')
+
+            const todos = JSON.parse(localStorage.getItem("todos"))
+            const testElem = document.querySelectorAll('.todo-text')
+
+            todos.forEach(td => {
+                testElem.forEach(te => {
+                    if (td.text == te.innerText) {
+                        td.offTop = te.offsetTop;
+                    }
+                })
+            })
+            todos.sort((a, b) => (a.offTop > b.offTop) ? 1 : -1)
+
+            localStorage.setItem("todos", JSON.stringify(todos))
+        })
     })
-
-    dragga.addEventListener('dragend', () => {
-      dragga.classList.remove('dragging')
-
-      const todos = JSON.parse(localStorage.getItem("todos"))
-      const testElem = document.querySelectorAll('.todo-text')
-
-      todos.forEach(td => {
-          testElem.forEach(te => {
-              if (td.text == te.innerText) {
-                  td.offTop = te.offsetTop;
-              }
-          })
-      })
-      todos.sort((a,b) => (a.offTop > b.offTop) ? 1 : -1)
-
-      localStorage.setItem("todos", JSON.stringify(todos))  
-    })
-})
 
     todoContainer.addEventListener('dragover', e => {
         e.preventDefault()
@@ -210,20 +236,20 @@ draggables.forEach(dragga => {
         }
     })
 
-const getDragAfterElement = (container, y) => {
-    const draggableElements = [...container.querySelectorAll('.todo-holder:not(.dragging)')]
+    const getDragAfterElement = (container, y) => {
+        const draggableElements = [...container.querySelectorAll('.todo-holder:not(.dragging)')]
 
-    return draggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect()
-        const offset = y - box.top - box.height /2
-        
-        if (offset < 0 && offset > closest.offset) {
-            return {offset: offset, element: child}
-        } else {
-            return closest;
-        }
-    }, {offset: Number.NEGATIVE_INFINITY}).element
-}
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect()
+            const offset = y - box.top - box.height / 2
+
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child }
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element
+    }
 }
 drag()
 
@@ -240,8 +266,8 @@ const items = () => {
     todosCb.forEach(td => {
         if (td.checked == false) {
             itemNum++;
-            return (itemNum == 1) ? itemCount.innerHTML =`${itemNum} item left` : itemCount.innerHTML = `${itemNum} items left`;
-        } 
+            return (itemNum == 1) ? itemCount.innerHTML = `${itemNum} item left` : itemCount.innerHTML = `${itemNum} items left`;
+        }
     })
 }
 items()
@@ -288,7 +314,7 @@ const display = () => {
         all.style.color = "hsl(236, 9%, 61%)";
         completed.style.color = "hsl(236, 9%, 61%)";
         displayState(true)
-     })
+    })
 
     completed.addEventListener('click', () => {
         completed.style.color = "hsl(220, 98%, 61%)";
