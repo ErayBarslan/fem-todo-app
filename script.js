@@ -118,6 +118,7 @@ const saveTodo = (todo) => {
     todoCb.type = "checkbox";
     todoCb.classList.add("checkbox")
     todoCb.checked = todo.isChecked;
+    todoCb.setAttribute("aria-label", "check todo")
     todoCb.addEventListener('click', checkTodo)
 
     const todoValue = document.createElement("p")
