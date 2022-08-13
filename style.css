@@ -1,0 +1,403 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap');
+
+/* THEME */
+
+.dark {
+    --bg-color: hsl(235, 21%, 11%);
+    --bg-content: hsl(235, 24%, 19%);
+    --desktop-bg: url('/images/bg-desktop-dark.jpg');
+    --mobile-bg: url('/images/bg-mobile-dark.jpg');
+    --theme-toggle: url('/images/icon-sun.svg');
+    --todo-text: hsl(233, 11%, 84%);
+    --todo-checked: hsla(233, 11%, 84%, 0.3);
+    --action-text: rgba(255, 255, 255, 0.51);
+    --holder-bottom: hsl(233, 14%, 35%);
+    --checkbox-border: hsl(235, 19%, 35%);
+    --dark-grayish-blue: hsl(234, 11%, 52%);
+    --bright-blue: hsl(220, 98%, 61%);
+    --btn-hover: white;
+}
+
+.light {
+    --bg-color: rgb(235, 235, 235);
+    --bg-content: white;
+    --desktop-bg: url('/images/bg-desktop-light.jpg');
+    --mobile-bg: url('/images/bg-mobile-light.jpg');
+    --theme-toggle: url('/images/icon-moon.svg');
+    --todo-text: rgba(71, 71, 71, 0.959);
+    --todo-checked: rgba(225, 225, 225, 1.5);
+    --action-text: rgba(255, 255, 255, 0.51);
+    --checkbox-border: hsl(236, 33%, 92%);
+    --holder-bottom: hsl(236, 33%, 92%);
+    --dark-grayish-blue: hsl(234, 11%, 52%);
+    --bright-blue: hsl(220, 98%, 61%);
+    --btn-hover: hsl(235, 19%, 35%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    background-color: var(--bg-color);
+    background-image: var(--desktop-bg);
+    background-repeat: no-repeat;
+    background-size: 100vw;
+    font-family: 'Josefin Sans';
+    font-size: 1.125rem;
+}
+
+.theme-switch {
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    transform: translateY(-5px);
+    background-image: url('/images/icon-sun.svg');
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.theme-switch:checked {
+    background-image: url('/images/icon-moon.svg');
+    background-position: center;
+}
+
+.container {
+    width: 540px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    letter-spacing: 15px;
+    margin: 30px 0 0 0;
+    font-size: 1.25rem;
+}
+
+.input-holder {
+    margin: 39px 0 0 0;
+    padding: 15px;
+    background-color: var(--bg-content);
+    display: flex;
+    border-radius: 5px;
+    align-content: center;
+    box-shadow: 0 25px 25px #0000004b;
+}
+
+.input-holder input {
+    flex-grow: 1;
+    min-width: 0;
+    margin: 0 0 0 23px;
+    background-color: var(--bg-content);
+    border: none;
+    outline: none;
+    font-family: 'Josefin Sans';
+    font-size: 1.125rem;
+    color: var(--todo-text);
+    padding-top: 3px;
+}
+
+.input-holder button {
+    width: 24px;
+    height: 24px;
+    border: .5px solid var(--checkbox-border);
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    margin: 5px 0 5px 9px;
+}
+
+.input-holder button:active {
+    background: linear-gradient(180deg, hsl(192, 100%, 67%) 0%, hsl(280, 87%, 65%) 100%);
+}
+
+.todo-container {
+    margin: 24px 0 0 0;
+    background-color: var(--bg-content);
+    color: var(--todo-text);
+    border-radius: 5px 5px 0 0;
+}
+
+.dragging {
+    opacity: 0.7;
+}
+
+.todo-holder {
+    display: flex;
+    border-bottom: .5px solid var(--checkbox-border);
+    padding: 15px;
+    cursor: grab;
+    align-items: center;
+}
+
+.todo-holder:active {
+    cursor: grabbing;
+}
+
+.todo-holder:hover .todo-delete {
+    visibility: initial;
+}
+
+.todo-holder .checkbox {
+    appearance: none;
+    border: .5px solid var(--checkbox-border);
+    width: 24px;
+    height: 24px;
+    margin: 5px 0 5px 9px;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.todo-holder .checkbox:checked {
+
+    background: url('./images/icon-check.svg'), linear-gradient(135deg, hsl(192, 100%, 67%) 0%, hsl(280, 87%, 65%) 100%);
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+}
+
+.checkbox:checked~.todo-text {
+    text-decoration: line-through;
+    color: var(--todo-checked);
+}
+
+.todo-text {
+    flex-grow: 1;
+    margin: 0 0 0 23px;
+    padding-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.todo-delete {
+    background: transparent;
+    background-image: url('./images/icon-cross.svg');
+    width: 18px;
+    height: 18px;
+    margin-right: 9px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    visibility: hidden;
+    flex-shrink: 0;
+}
+
+/* Actions */
+
+.actions {
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.actions div {
+    background-color: var(--bg-content);
+    padding: 16px;
+}
+
+.actions .items {
+    border-bottom-left-radius: 5px;
+    padding-left: 25px;
+    font-size: .875rem;
+    color: var(--dark-grayish-blue)
+}
+
+.actions button {
+    background: none;
+    color: var(--dark-grayish-blue);
+    border: none;
+    cursor: pointer;
+    font-size: .875rem;
+}
+
+.actions .clear {
+    border-bottom-right-radius: 5px;
+    padding-right: 25px;
+}
+
+.display {
+    flex-grow: 1;
+}
+
+.display button {
+    padding-left: 15px;
+    color: var(--bright-blue);
+    font-family: 'Josefin Sans';
+}
+
+.display .all {
+    margin-left: 20px;
+}
+
+.display button:focus {
+    font-weight: 700;
+}
+
+.display button:hover {
+    color: var(--btn-hover) !important;
+}
+
+.display>button~button {
+    color: var(--dark-grayish-blue);
+}
+
+.clear button {
+    font-family: 'Josefin Sans';
+}
+
+.clear button:hover {
+    color: var(--btn-hover);
+}
+
+.clear button:active {
+    color: var(--dark-grayish-blue);
+}
+
+.info {
+    color: var(--dark-grayish-blue);
+    margin-top: 51px;
+    text-align: center;
+    font-size: .850rem;
+}
+
+
+/* MOBILE */
+
+@media screen and (max-width: 600px) {
+    body {
+        background-image: var(--mobile-bg);
+        align-content: start;
+    }
+
+    .container {
+        width: 328px;
+    }
+
+    .header {
+        letter-spacing: 10px;
+        margin: 45px 0 0 2px;
+        font-size: .8275rem;
+    }
+
+    .theme-switch {
+        width: 20px;
+        height: 20px;
+        background-size: 100%;
+        transform: translateY(-3px);
+    }
+
+    .input-holder {
+        margin: 31px 0 0 0;
+        padding: 10px;
+
+    }
+
+    .input-holder input {
+        margin: 0 0 0 12px;
+        font-size: .73rem;
+        padding-top: 3px;
+    }
+
+    .input-holder button {
+        width: 20px;
+        height: 20px;
+        margin: 4px 0 4px 11px;
+    }
+
+    .todo-container {
+        margin: 16px 0 0 0;
+    }
+
+    .todo-holder {
+        padding: 10px;
+    }
+
+    .todo-holder .checkbox {
+        width: 20px;
+        height: 20px;
+        margin: 6px 0 6px 11px;
+    }
+
+    .todo-text {
+        margin: 0 0 0 12px;
+        padding-top: 3px;
+        font-size: .73rem;
+    }
+
+    .todo-delete {
+        width: 12px;
+        height: 12px;
+        background-size: 100%;
+        margin-right: 10px;
+        visibility: visible;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .actions div {
+        padding: 10px;
+    }
+
+    .actions .items {
+        border-bottom-left-radius: 5px;
+        padding-left: 21px;
+        padding-top: 19px;
+        padding-bottom: 19px;
+        font-size: .73rem;
+        flex-grow: 1;
+        text-align: start;
+    }
+
+    .actions button {
+        font-size: .73rem;
+    }
+
+    .actions .clear {
+        border-bottom-right-radius: 5px;
+        padding-right: 20px;
+        padding-top: 14px;
+    }
+
+    .display {
+        order: 3;
+        margin-top: 16px;
+        border-radius: 5px;
+    }
+
+    .display button {
+        padding-left: 15px;
+        font-size: .875rem;
+        margin: 7.5px 0 4.5px 0;
+    }
+
+    .display .all {
+        margin-left: -15px;
+    }
+
+    .info {
+        margin-top: 42px;
+        font-size: .85rem;
+    }
+
+}
