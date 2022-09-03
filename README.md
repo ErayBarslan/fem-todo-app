@@ -29,8 +29,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [https://github.com/ErayBarslan/frontend-todo-app/](https://github.com/ErayBarslan/frontend-todo-app/)
-- Live Site URL: [https://eraybarslan.github.io/frontend-todo-app/](https://eraybarslan.github.io/frontend-todo-app/)
+- Solution URL: [https://github.com/ErayBarslan/fem-todo-app/](https://github.com/ErayBarslan/fem-todo-app/)
+- Live Site URL: [https://eraybarslan.github.io/fem-todo-app/](https://eraybarslan.github.io/fem-todo-app/)
 
 ### Screenshots
 
